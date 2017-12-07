@@ -114,7 +114,7 @@ class DefaultController extends Controller
     {
 
         $em = $this->container->get('doctrine')->getManager();
-        $repo = $em->getRepository('ZeplinBundle:Profile')->getProfilePicture();
+        $repo = $em->getRepository('ZeplinBundle:Profile')->getProfilePicture($this->getUserProfileId());
         return $this->render('ZeplinBundle:Default:partials/profile_pic.html.twig', ['content' => $repo]);
     }
 

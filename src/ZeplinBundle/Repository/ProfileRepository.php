@@ -14,12 +14,14 @@ class ProfileRepository extends EntityRepository
 {
 
 
-    public function getProfilePicture(): array
+    public function getProfilePicture($userId): array
     {
 
         $qb = $this->createQueryBuilder('p')
             ->select('img.image')
             ->innerJoin('ZeplinBundle:Images','img', 'WITH', 'img.id = p.imageId')
+            ->where('p.userId = :userId')
+            ->setParameter('userId', $userId)
             ->getQuery();
         return $qb->execute();
 
