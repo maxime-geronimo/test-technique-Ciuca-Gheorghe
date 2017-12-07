@@ -183,15 +183,18 @@ class DefaultController extends Controller
 
         $em = $this->container->get('doctrine')->getManager();
 
-        if (!$profile = $em->getRepository('ZeplinBundle:Profile')->find($this->getUserProfileId())) {
+        if (!$profile = $em->getRepository('ZeplinBundle:Profile')->findOneByUserId($this->getUserProfileId())) {
             $profile = new Profile();
+            $profile->setUserId($this->getUserProfileId());
         }
 
         $profile->setImageId($imgId);
 
         $profile->setTime(new \DateTime());
+        
 
         $em->persist($profile);
+
         $em->flush();
 
         return $this->render('ZeplinBundle:Default:modals/messages.html.twig', ['message' => 'Profile picture was updated'

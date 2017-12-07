@@ -29,6 +29,14 @@ class Profile
     private $imageId;
 
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="user_id", type="integer", unique=true)
+     */
+    private $userId;
+
+
 
     /**
      * @var \DateTime
@@ -95,4 +103,30 @@ class Profile
     {
         return $this->time;
     }
+
+
+    /**
+     * Get userId
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     * @return Profile
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
 }
