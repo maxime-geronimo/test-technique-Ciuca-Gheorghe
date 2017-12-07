@@ -22,9 +22,9 @@ class Profile
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="image_id", type="integer")
+     * One Post has One Image.
+     * @ORM\OneToOne(targetEntity="Images")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id",onDelete="CASCADE")
      */
     private $imageId;
 
@@ -47,7 +47,6 @@ class Profile
 
 
 
-
     /**
      * Get id
      *
@@ -59,12 +58,10 @@ class Profile
     }
 
     /**
-     * Set imageId
-     *
-     * @param integer $imageId
-     * @return Profile
+     * @param Images $imageId
+     * @return $this
      */
-    public function setImageId($imageId)
+    public function setImageId(Images $imageId)
     {
         $this->imageId = $imageId;
 

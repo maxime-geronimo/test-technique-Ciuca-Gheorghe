@@ -135,7 +135,6 @@ class DefaultController extends Controller
 
             $image = $em->getRepository('ZeplinBundle:Images')->find($imageId);
             $post = $em->getRepository('ZeplinBundle:Posts')->findOneByImage($imageId);
-            $profile = $em->getRepository('ZeplinBundle:Profile')->findOneByImageId($imageId);
 
             $form = $this->createForm(PostType::class, $post);
             $form->handleRequest($request);
@@ -148,10 +147,6 @@ class DefaultController extends Controller
 
                         if ($post) {
                             $em->remove($post);
-                        }
-
-                        if ($profile) {
-                            $em->remove($profile);
                         }
 
                         $em->flush();
@@ -183,15 +178,17 @@ class DefaultController extends Controller
 
         $em = $this->container->get('doctrine')->getManager();
 
+        $image = $em->getRepository('ZeplinBundle:Images')->findOneById($imgId);
+
         if (!$profile = $em->getRepository('ZeplinBundle:Profile')->findOneByUserId($this->getUserProfileId())) {
             $profile = new Profile();
             $profile->setUserId($this->getUserProfileId());
         }
 
-        $profile->setImageId($imgId);
+        $profile->setImageId($image);
 
         $profile->setTime(new \DateTime());
-        
+
 
         $em->persist($profile);
 
