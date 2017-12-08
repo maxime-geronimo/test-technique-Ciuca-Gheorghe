@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div class="well">
+                <form action="{{ path('register') }}" method="post">
+                    {{ form_errors(form) }}
+                    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.password.first,{
+                        'label':'password'
+                    }) }}
+                    {{ form_row(form.password.second,{
+                        'label':'repeat password'
+                    }) }}
+                    {{ form_rest(form) }}
+                    <input type="submit" value="register">
+                </form>
+            </div>
+            <hr />
+            <a href="{{ path('login') }}">Register</a>
+        </div>
+    </div>
+{% endblock %}

@@ -21,7 +21,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->container->get('doctrine')->getManager();
-        $repo = $em->getRepository('ZeplinBundle:Images')->findAll();
+        $repo = $em->getRepository('ZeplinBundle:Images')->findAllByUserId($this->getUserProfileId());
         return $this->render('ZeplinBundle:Default:index.html.twig', ['content' => $repo]);
     }
 
@@ -50,6 +50,7 @@ class DefaultController extends Controller
 
             $post->setImage($fileName);
             $post->setTime(new \DateTime());
+            $post->setUserId($this->getUser()->getId());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
@@ -211,7 +212,7 @@ class DefaultController extends Controller
 
     private function getUserProfileId()
     {
-        return 1;
+        return $this->getUser()->getId();
     }
 
 }

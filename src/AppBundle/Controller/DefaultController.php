@@ -18,4 +18,46 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ));
     }
+
+
+
+    /**
+     * @Route("/login", name="login")
+     */
+
+    public function loginAction(Request $request)
+    {
+
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository('AppBundle:User');
+
+
+
+        return $this->render('default/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ));
+
+
+    }
+
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+
+    }
+
 }

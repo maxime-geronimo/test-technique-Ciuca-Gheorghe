@@ -13,15 +13,23 @@
 
 <div class="container">
     {% block body %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="row">
-        <div class="col-lg-12 header">
-            <h2>Profile Pic Manager</h2>
-            {{ render(controller(
-            'ZeplinBundle:Default:profilePic'
-            ))
-            }}
+            <div class="col-lg-12 text-right">
+                <a href="{{ path('logout') }}">Logout</a>
+            </div>
         </div>
-        </div>{% endblock %}
+        <div class="row">
+            <div class="col-lg-12 header">
+                <h2>Profile Pic Manager</h2>
+                {{ render(controller(
+                'ZeplinBundle:Default:profilePic'
+                ))
+                }}
+            </div>
+        </div>
+    {%- endif %}
+    {% endblock %}
 </div>
 
 {% block javascripts %}

@@ -32,7 +32,6 @@ class Images
     private $image;
 
 
-
     /**
      * @var \DateTime
      *
@@ -40,10 +39,20 @@ class Images
      */
     private $time;
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     *
+     **/
+
+    private $userId;
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -66,13 +75,22 @@ class Images
     /**
      * Get image
      *
-     * @return string 
+     * @return string
      */
     public function getImage()
     {
         return $this->image;
     }
 
+
+    /**
+     * @param $userId
+     * @return mixed
+     */
+    public function setUserId($userId)
+    {
+        return $this->userId = $userId;
+    }
 
 
     /**
