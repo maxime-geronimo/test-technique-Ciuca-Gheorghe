@@ -15,6 +15,7 @@ class RegisterController extends Controller
      */
     public function indexAction(Request $request)
     {
+
         $form = $this->createFormBuilder(null, [
             'data_class' => 'AppBundle\Entity\User'
         ])
@@ -32,6 +33,8 @@ class RegisterController extends Controller
             $em = $this->container->get('doctrine')->getManager();
             $em->persist($user);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('login'));
         }
 
         return $this->render('register/index.html.twig',
