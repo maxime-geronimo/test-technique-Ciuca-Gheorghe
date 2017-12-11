@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -29,6 +30,7 @@ class RegisterController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
+            $user->setPassword($this->encodePassword($user,$user->getPassword()),$user->getPassword());
 
             $em = $this->container->get('doctrine')->getManager();
             $em->persist($user);
@@ -37,12 +39,18 @@ class RegisterController extends Controller
             return $this->redirect($this->generateUrl('login'));
         }
 
+
         return $this->render('register/index.html.twig',
             ['form' => $form->createView()]);
 
     }
 
 
+    private function encodePassword(User $user,$plainTextPassword){
+        $encoder = $this->container->get('security.password_encoder');
+        $password = $encoder->encodePassword($user, $plainTextPassword);
+        return $password;
+    }
 
 
 }
